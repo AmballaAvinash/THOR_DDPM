@@ -8,8 +8,8 @@ checkpoint_path: &checkpoint_path './weights/thor/thor/'
 #
 experiment:
   name: THOR
-  task: train # test 
-  weights: #'PATH_TO_WEIGHTS/latest_model.pt' # 1500 Gaussian
+  task: test 
+  weights:  brain_Guassian.pt #'PATH_TO_WEIGHTS/latest_model.pt' # 1500 Gaussian
 
 
 device: gpu
@@ -54,42 +54,42 @@ model:
 #
 # Trainer
 #
-trainer:
-  module_name: projects.thor.DDPMTrainer
-  class_name: PTrainer
-  params:
-    input_size: *target_size
-    checkpoint_path: *checkpoint_path
-    batch_size: *tbatch_size
-    nr_epochs: 1500
-    patience: 1500
-    val_interval: 50
-    # Loss
-    loss:
-      module_name: optim.losses.ln_losses
-      class_name: L2
-      params:
-    optimizer_params:
-      lr: 1.0e-4
-  # Data Loader
-  data_loader:
-    # IXI-T1
-    module_name: core.DataLoader
-    class_name: DefaultDataLoader
-    params:
-      args:
-        target_size: *target_size
-        batch_size: *tbatch_size
-        dataset_module:
-          module_name: data.loaders.brain_loader
-          class_name: BrainLoader
-        data_dir:
-          train:
-            - './data/CAPS_IXI/splits/ixi-t1_atlas_train_2D.csv'
-          val:
-            - './data/CAPS_IXI/splits/ixi-t1_val_2D.csv'
-          test:
-            - './data/CAPS_IXI/splits/ixi-t1_test_2D.csv'
+# trainer:
+#   module_name: projects.thor.DDPMTrainer
+#   class_name: PTrainer
+#   params:
+#     input_size: *target_size
+#     checkpoint_path: *checkpoint_path
+#     batch_size: *tbatch_size
+#     nr_epochs: 1500
+#     patience: 1500
+#     val_interval: 50
+#     # Loss
+#     loss:
+#       module_name: optim.losses.ln_losses
+#       class_name: L2
+#       params:
+#     optimizer_params:
+#       lr: 1.0e-4
+#   # Data Loader
+#   data_loader:
+#     # IXI-T1
+#     module_name: core.DataLoader
+#     class_name: DefaultDataLoader
+#     params:
+#       args:
+#         target_size: *target_size
+#         batch_size: *tbatch_size
+#         dataset_module:
+#           module_name: data.loaders.brain_loader
+#           class_name: BrainLoader
+#         data_dir:
+#           train:
+#             - './data/CAPS_IXI/splits/ixi-t1_atlas_train_2D.csv'
+#           val:
+#             - './data/CAPS_IXI/splits/ixi-t1_val_2D.csv'
+#           test:
+#             - './data/CAPS_IXI/splits/ixi-t1_test_2D.csv'
 
 # Downstream tasks
 downstream_tasks:
